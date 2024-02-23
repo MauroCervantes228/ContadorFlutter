@@ -1,3 +1,4 @@
+import 'package:contador/pages/password_recovery_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -147,32 +148,47 @@ bool showPass = true;
   }
 }
 
+
 class Remember extends StatefulWidget {
-  const Remember({super.key});
+  const Remember({Key? key}) : super(key: key);
 
   @override
   State<Remember> createState() => _RememberState();
 }
 
 class _RememberState extends State<Remember> {
-  bool checked = false;
+  bool ischecked = true;
+
+  void handlePasswordForgotten() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PasswordRecoveryPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Checkbox(
-          value: checked,
-          onChanged: (value) => {
-            setState(()=>
-              checked == false ? checked = true : checked = false
-            )
+          value: ischecked,
+          onChanged: (value) {
+            setState(() {
+              ischecked = value ?? false;
+            });
           },
         ),
-        const Text('Remember me'),
+        const Text(
+          'Recuérdame',
+          style: TextStyle(fontSize: 12),
+        ),
         const Spacer(),
         TextButton(
-          onPressed: () => {},
-          child: const Text('Forgot Password?'),
+          onPressed: handlePasswordForgotten, // Llama a la función definida arriba
+          child: const Text(
+            'Forgot your password?',
+            style: TextStyle(fontSize: 12),
+          ),
         ),
       ],
     );
